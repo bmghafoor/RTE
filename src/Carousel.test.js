@@ -63,3 +63,43 @@ it("works when you click on the left arrow", function () {
     queryByAltText("Photo by Pratik Patel on Unsplash")
   ).not.toBeInTheDocument();
 });
+
+it("should not display the left arrow on first slide", function () {
+  const { queryByTestId, queryByAltText } = render(<Carousel />);
+
+  expect(
+    queryByAltText("Photo by Richard Pasquarella on Unsplash")
+  ).toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).not.toBeInTheDocument();
+
+  const leftArrow = queryByTestId("left-arrow");
+
+  // expect the left arrow to not show
+  expect(leftArrow).not.toBeInTheDocument();
+});
+
+it("should not display the right arrow on last slide", function () {
+  const { queryByTestId, queryByAltText } = render(<Carousel />);
+
+  expect(
+    queryByAltText("Photo by Richard Pasquarella on Unsplash")
+  ).toBeInTheDocument();
+  expect(
+    queryByAltText("Photo by Pratik Patel on Unsplash")
+  ).not.toBeInTheDocument();
+
+  const rightArrow = queryByTestId("right-arrow");
+
+  fireEvent.click(rightArrow);
+  fireEvent.click(rightArrow);
+
+  expect(
+    queryByAltText("Photo by Josh Post on Unsplash")
+  ).toBeInTheDocument();
+
+
+  // expect the left arrow to not show
+  expect(rightArrow).not.toBeInTheDocument();
+});
